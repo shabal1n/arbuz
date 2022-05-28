@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="passWatermelons">
+  <form @submit.prevent>
     <input
         type="submit"
         v-for="bed in garden_bed"
@@ -29,8 +29,8 @@ form {
   justify-content: center;
 }
 
-input {
-  color: #d66f7f;
+input[type='submit'] {
+  color: #007944;
   background-color: transparent;
   border: 3px solid #007944;
   margin-inline: 1%;
