@@ -7,7 +7,7 @@
               v-bind:class="{clicked_watermelon: i.clicked}"
               v-if="bed !== 0 && i.status_id === 1"
               type="submit"
-              v-on:click="checkForClicked(i)"
+              v-on:click="checkForClicked(i); $emit('make-order', selected_watermelons, cut_into_slices)"
               v-model="i.weight"
               title="Watermelon is green"
               class="watermelon_not_ready"
@@ -16,7 +16,7 @@
               v-bind:class="{clicked_watermelon: i.clicked}"
               v-else-if="bed !== 0 && i.status_id === 2"
               type="submit"
-              v-on:click="checkForClicked(i)"
+              v-on:click="checkForClicked(i); $emit('make-order', selected_watermelons, cut_into_slices)"
               v-model="i.weight"
               title="Watermelon is ready"
           >
@@ -37,7 +37,11 @@
         </div>
       </div>
     </form>
-    <input type="button" value="Submit order">
+    <input type="checkbox" id="cut_slices" value="Cut"
+           v-show="bed !== 0"
+           v-on:change="cut_into_slices = !cut_into_slices; $emit('make-order', selected_watermelons, cut_into_slices)">
+    <label v-show="bed !== 0"
+           for="cut_slices"> Cut into slices</label><br>
   </div>
 </template>
 
@@ -53,7 +57,8 @@ export default {
   data() {
     return {
       clicked: 0,
-      selected_watermelons: []
+      selected_watermelons: [],
+      cut_into_slices: false
     }
   },
   methods: {
@@ -111,19 +116,8 @@ form {
   flex-wrap: wrap;
 }
 
-input[type='button'] {
-  border: 3px solid #007944;
-  background-color: transparent;
-  color: #007944;
-  border-radius: 6px;
-}
-
-input[type='button']:hover {
-  background-color: lightgrey;
-}
-
 .clicked_watermelon {
-  background-color: #bf4147;
+  background-color: #007944;
 }
 
 .child {

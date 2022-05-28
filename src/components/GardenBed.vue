@@ -3,8 +3,9 @@
     <input
         type="submit"
         v-for="bed in garden_bed"
+        v-bind:class="{clicked_garden_bed: bed.clicked}"
         v-model="bed.id"
-        v-on:click="$emit('pass-watermelons', bed)"
+        v-on:click="$emit('pass-watermelons', bed); bed.clicked = !bed.clicked;"
     >
   </form>
 </template>
@@ -16,8 +17,7 @@ export default {
       type: Object,
       required: true
     }
-  },
-  methods: {}
+  }
 }
 </script>
 
@@ -27,6 +27,7 @@ form {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 
 input[type='submit'] {
@@ -42,6 +43,10 @@ input[type='submit'] {
 }
 
 input:hover {
+  background-color: lightgrey;
+}
+
+.clicked_garden_bed {
   background-color: lightgrey;
 }
 </style>
