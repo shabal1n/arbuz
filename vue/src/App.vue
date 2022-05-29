@@ -35,10 +35,10 @@ export default {
   data() {
     return {
       garden_beds: [
-        {id: 1, capacity: 8, curr_available: 11, clicked: false},
-        {id: 2, capacity: 16, curr_available: 1, clicked: false},
-        {id: 3, capacity: 20, curr_available: 15, clicked: false},
-        {id: 4, capacity: 24, curr_available: 0, clicked: false}
+        {id: 1, capacity: 8, clicked: false},
+        {id: 2, capacity: 16, clicked: false},
+        {id: 3, capacity: 20, clicked: false},
+        {id: 4, capacity: 24, clicked: false}
       ],
       watermelons: [
         {id: 1, garden_bed_id: 1, position: 1, weight: 3.22, status_id: 1, clicked: false},
@@ -109,6 +109,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   justify-content: center;
+  height: 1668px;
+  background-image: url("https://img.freepik.com/free-photo/cubes-watermelon-raspberries-plum-cherries-strawberries-side-white-background_23-2148103728.jpg?w=2000");
 }
 
 h2 {

@@ -26,6 +26,12 @@
           <input required v-model="number" @input="validatePhone" type="text" id="number" placeholder="(708)909-9017">
         </div>
         <div class="input_container">
+          <label for="date">Delivery date:</label>
+          <input
+              required type="date" id="date"
+              :min="getMinYear">
+        </div>
+        <div class="input_container">
           <button
               v-on:click="validateFields"
               id="order">Order</button>
@@ -63,6 +69,11 @@ export default {
     },
     submitOrder() {
       this.$emit('submit-order')
+    },
+    getMinYear() {
+      const d = new Date();
+      const date_string = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      return date_string;
     }
   },
   data() {
@@ -70,6 +81,7 @@ export default {
       full_name: "",
       address: "",
       number: "",
+      date: new Date(),
       msg: ""
     }
   }
