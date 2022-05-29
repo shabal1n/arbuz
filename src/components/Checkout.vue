@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <div
+      v-show="selected_watermelons.length > 0"
+      class="container">
     <div class="check">
       <h2>Your order:</h2>
       <hr>
@@ -13,11 +15,18 @@
         </li>
       </ul>
       <h4>Additional options:</h4>
-      <h5>Cut to slice &emsp; &emsp; {{ cut_slices_price * selected_watermelons.length }}</h5>
+      <h5
+          v-if="cut_slices === true"
+      >Cut to slice &emsp; &emsp; {{ cut_slices_price * selected_watermelons.length }} KZT</h5>
+      <h5
+          v-else
+      >Cut to slice &emsp; &emsp; 0 KZT</h5>
       <hr>
-      <h3>Total: {{ total }}</h3>
+      <h3>Total: {{ countTotal }}</h3>
     </div>
-    <input type="button" value="Submit order">
+    <input
+        v-on:click="$emit('open-modal')"
+        type="button" value="Submit order">
   </div>
 </template>
 
@@ -32,16 +41,24 @@ export default {
   },
   data() {
     return {
-      total: 0,
+      total: 0.0,
       cut_slices_price: 590,
       watermelon_price_per_kg: 610
     }
   },
-  methods: {
+  computed: {
     countTotal() {
-
+      this.total = 0
+      for (let i = 0; i < this.selected_watermelons.length; i++) {
+        this.total += Math.floor(this.watermelon_price_per_kg * this.selected_watermelons[i].weight * 10) / 10
+      }
+      if (this.cut_slices) {
+        this.total += this.cut_slices_price * this.selected_watermelons.length
+      }
+      return Math.floor(this.total * 10) / 10
     }
-  }
+  },
+  methods: {}
 }
 </script>
 

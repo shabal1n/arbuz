@@ -14,7 +14,13 @@
   <Checkout
       v-bind:selected_watermelons="selected_watermelons"
       v-bind:cut_slices="cut_slices"
+      @open-modal="showModal"
   />
+  <Modal
+      v-show="isModalVisible"
+      @close="closeModal"
+      @submit-order="submitOrder"
+      />
 </template>
 
 <script>
@@ -22,6 +28,7 @@ import Header from '@/components/Header'
 import GardenBed from '@/components/GardenBed'
 import Watermelons from "@/components/Watermelons";
 import Checkout from '@/components/Checkout'
+import Modal from '@/components/Modal'
 
 export default {
   name: 'App',
@@ -51,14 +58,16 @@ export default {
         {id: 3, name: 'Taken'},
       ],
       selected_watermelons: [],
-      cut_slices: false
+      cut_slices: false,
+      isModalVisible: false
     }
   },
   components: {
     Header,
     GardenBed,
     Watermelons,
-    Checkout
+    Checkout,
+    Modal
   },
   methods: {
     passWatermelons(bed) {
@@ -68,6 +77,23 @@ export default {
     makeOrder(watermelons, slices) {
       this.selected_watermelons = watermelons
       this.cut_slices = slices
+    },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
+    submitOrder() {
+      const listOfIds = [];
+      for (let i = 0; i < this.selected_watermelons.length; i++) {
+        listOfIds.push(this.selected_watermelons[i].id);
+      }
+      for (let i = 0; i < this.watermelons.length; i++) {
+        if (listOfIds.includes(this.watermelons[i].id)) {
+          this.watermelons[i].status_id = 3;
+        }
+      }
     }
   }
 }
